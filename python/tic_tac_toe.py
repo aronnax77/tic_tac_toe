@@ -73,7 +73,6 @@ class TicTacToe:
             x += 1
         return result
 
-
     def genAllPosBrds(self, token, brd = None):
         """
         returns a list of all board positions if the token is placed in the
@@ -120,7 +119,7 @@ class TicTacToe:
         """
         ranks the proposed move +10 for immediate win, -10 for lose on next move.
         intermediate values indicate win or loss at a lower level. draw or win on
-        last move - draw given as 0.
+        last move - draw given as 0. Argument pos takes values 1 - 9.
         """
         currentToken = moveToken
         level = lvl
@@ -136,10 +135,15 @@ class TicTacToe:
                 nextToken = "X"
             brds = [newBoard]
             moveNo = self.getNextMoveNo(brd = newBoard)
-            return self.analyseLevels(brds, nextToken, moveNo, level + 1)
+            return self._analyseLevels(brds, nextToken, moveNo, level + 1)
 
 
-    def analyseLevels(self, brds, token, move, lvl):
+    def _analyseLevels(self, brds, token, move, lvl):
+        """
+        helper method for use by rankMove(). analyses each level until a test_incTerminal
+        state is detected and then returns a modified win (between 8 and 2),
+        and lose (between 8 and 2) or draw 0.
+        """
         # get new set of boards to analyse
         level = lvl
         newBoards = []
@@ -153,16 +157,36 @@ class TicTacToe:
                 return -(12 - level)
             else:
                 return (11 - level)
+        elif self.incTerminalState(newBoards, token, move) and self.isDraw(move):
+            return 0
         else:
             if token == "X":
                 nextToken = "O"
             else:
                 nextToken = "X"
             brds = [newBoards]
-            return self.analyseLevels(brds, nextToken, move + 1, level + 1)
+            return self._analyseLevels(brds, nextToken, move + 1, level + 1)
+
+    def analyseMovesFor(self, token, brd = None):
+        if brd == None:
+            tempBoard = self.board[:]
+        else:
+            tempBoard = brd[:]
+        result = []
+        choices = self.available(brd = tempBoard)
+        for index in choices:
+            rank = self.rankMove(token, index + 1)
+            result.append((index, rank))
+
+        return result
 
 
     def getNextMoveNo(self, brd = None):
+        """
+        given the current board position or a named brd position return the
+        move number for the next move - numbers 1 to 9 valid.  if all moves
+        have been taken return None
+        """
         if brd == None:
             thisBoard = self.board[:]
         else:
@@ -173,7 +197,11 @@ class TicTacToe:
             if thisBoard[x] == "-":
                 result += 1
             x += 1
-        return 9 - result + 1
+
+        if result == 0:
+            return None
+        else:
+            return 9 - result + 1
 
 
     def __str__(self):
@@ -189,7 +217,8 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    #x = TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
+    x = TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "-"])
     #result = x.analyseLevels([["O", "X", "X", "X", "-", "X", "-", "O", "O"]], "O", 8, 2)
-    x = TicTacToe()
-    print(x.rankMove("X", 1))
+    #x = TicTacToe()
+    print(x.available())
+    print(x.rankMove("O", 1))

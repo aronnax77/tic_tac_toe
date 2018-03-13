@@ -71,9 +71,15 @@ def test_getNextMoveNo():
     x = ttt.TicTacToe()
     assert(x.getNextMoveNo() == 1)
     assert(x.getNextMoveNo(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"]) == 7)
+    x = ttt.TicTacToe(brd = ["X", "X", "O", "O", "O", "X", "X", "O", "O"])
+    assert(x.getNextMoveNo() == None)
 
 def test_rankMove():
     x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
     assert(x.rankMove("X", 5) == 10)
     assert(x.rankMove("X", 2) == -10)
     assert(x.rankMove("X", 7) == -10)
+
+def test_analyseMovesFor():
+    x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
+    assert(x.analyseMovesFor("X") == [(1, -10), (4, 10), (6, -10)])
