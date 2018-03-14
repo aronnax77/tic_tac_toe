@@ -1,4 +1,4 @@
-
+import pdb
 
 class TicTacToe:
     """
@@ -65,12 +65,14 @@ class TicTacToe:
             thisBoard = self.board[:]
         else:
             thisBoard = brd[:]
+        #pdb.set_trace()
         result = []
         x = 0
         while x < 9:
             if thisBoard[x] == "-":
                 result.append(x)
             x += 1
+        #pdb.set_trace()
         return result
 
     def genAllPosBrds(self, token, brd = None):
@@ -84,11 +86,11 @@ class TicTacToe:
             tempBoard = brd[:]
         result = []
         possiblePositions = self.available(brd = tempBoard)
-        for pos in possiblePositions:
-            tempBoard[pos] = token
-            result.append(tempBoard)
-            tempBoard = self.board[:]
-
+        for index in possiblePositions:
+            newBoard = tempBoard[:]
+            newBoard[index] = token
+            result.append(newBoard)
+        #pdb.set_trace()
         return result
 
 
@@ -115,15 +117,21 @@ class TicTacToe:
         return False
 
 
-    def rankMove(self, moveToken, pos, lvl = 1):
+    def rankMove(self, moveToken, pos, lvl = 1, brd = None):
         """
-        ranks the proposed move +10 for immediate win, -10 for lose on next move.
+        ranks the proposed move at pos +10 for immediate win, -10 for lose on next move.
         intermediate values indicate win or loss at a lower level. draw or win on
         last move - draw given as 0. Argument pos takes values 1 - 9.
         """
+        if brd == None:
+            newBoard = self.board[:]
+        else:
+            newBoard = brd[:]
+
+        moveNo = self.getNextMoveNo(brd = newBoard)
+
         currentToken = moveToken
         level = lvl
-        newBoard = self.board[:]
         newBoard[pos - 1] = moveToken
         temp = TicTacToe(brd = newBoard)
         if level == 1 and temp.isWin():
@@ -133,9 +141,13 @@ class TicTacToe:
                 nextToken = "O"
             else:
                 nextToken = "X"
-            brds = [newBoard]
-            moveNo = self.getNextMoveNo(brd = newBoard)
-            return self._analyseLevels(brds, nextToken, moveNo, level + 1)
+
+            if moveNo == 1:
+                brds = [newBoard]
+            else:
+                newBoard[pos - 1] = "-"
+                brds = [newBoard]
+            return self._analyseLevels(brds, nextToken, moveNo + 1, level + 1)
 
 
     def _analyseLevels(self, brds, token, move, lvl):
@@ -144,11 +156,13 @@ class TicTacToe:
         state is detected and then returns a modified win (between 8 and 2),
         and lose (between 8 and 2) or draw 0.
         """
+        #pdb.set_trace()
         # get new set of boards to analyse
         level = lvl
         newBoards = []
         for brd in brds:
             newBrds = self.genAllPosBrds(token, brd = brd)
+            #pdb.set_trace()
             for each in newBrds:
                 newBoards.append(each)
 
@@ -164,8 +178,9 @@ class TicTacToe:
                 nextToken = "O"
             else:
                 nextToken = "X"
-            brds = [newBoards]
+            brds = newBoards
             return self._analyseLevels(brds, nextToken, move + 1, level + 1)
+
 
     def analyseMovesFor(self, token, brd = None):
         if brd == None:
@@ -175,7 +190,7 @@ class TicTacToe:
         result = []
         choices = self.available(brd = tempBoard)
         for index in choices:
-            rank = self.rankMove(token, index + 1)
+            rank = self.rankMove(token, index + 1, brd = tempBoard)
             result.append((index, rank))
 
         return result
@@ -191,6 +206,7 @@ class TicTacToe:
             thisBoard = self.board[:]
         else:
             thisBoard = brd[:]
+
         result = 0
         x = 0
         while x < 9:
@@ -217,8 +233,8 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    x = TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "-"])
+    x = TicTacToe()
     #result = x.analyseLevels([["O", "X", "X", "X", "-", "X", "-", "O", "O"]], "O", 8, 2)
     #x = TicTacToe()
-    print(x.available())
-    print(x.rankMove("O", 1))
+    print(x.analyseMovesFor("O"))
+    #print(x.rankMove("X"))

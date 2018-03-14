@@ -52,6 +52,7 @@ def test_genAllPosBrds():
     assert(x.genAllPosBrds("X") == [["O", "X", "X", "X", "-", "X", "-", "O", "O"],
                                     ["O", "-", "X", "X", "X", "X", "-", "O", "O"],
                                     ["O", "-", "X", "X", "-", "X", "X", "O", "O"]])
+    assert(x.genAllPosBrds("X", brd = ["O", "-", "X", "X", "O", "X", "-", "O", "-"]) == [["O", "X", "X", "X", "O", "X", "-", "O", "-"], ["O", "-", "X", "X", "O", "X", "X", "O", "-"], ["O", "-", "X", "X", "O", "X", "-", "O", "X"]])
 
 def test_incTerminalState():
     x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
@@ -83,3 +84,4 @@ def test_rankMove():
 def test_analyseMovesFor():
     x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
     assert(x.analyseMovesFor("X") == [(1, -10), (4, 10), (6, -10)])
+    assert(x.analyseMovesFor("O", brd = ["O", "-", "X", "X", "-", "X", "-", "-", "O"]) == [(1, -10), (4, 10), (6, -10), (7, -10)])
