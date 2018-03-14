@@ -85,3 +85,5 @@ def test_analyseMovesFor():
     x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
     assert(x.analyseMovesFor("X") == [(1, -10), (4, 10), (6, -10)])
     assert(x.analyseMovesFor("O", brd = ["O", "-", "X", "X", "-", "X", "-", "-", "O"]) == [(1, -10), (4, 10), (6, -10), (7, -10)])
+    x = ttt.TicTacToe(brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"])
+    assert(x.analyseMovesFor("O", brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"]) == [(1, 8), (3, -10), (5, -10), (6, -10), (7, -10)])

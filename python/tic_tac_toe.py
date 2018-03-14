@@ -134,6 +134,7 @@ class TicTacToe:
         level = lvl
         newBoard[pos - 1] = moveToken
         temp = TicTacToe(brd = newBoard)
+        #pdb.set_trace()
         if level == 1 and temp.isWin():
             return 10
         else:
@@ -142,12 +143,13 @@ class TicTacToe:
             else:
                 nextToken = "X"
 
-            if moveNo == 1:
-                brds = [newBoard]
-            else:
-                newBoard[pos - 1] = "-"
-                brds = [newBoard]
-            return self._analyseLevels(brds, nextToken, moveNo + 1, level + 1)
+            #if moveNo == 1:
+                #brds = [newBoard]
+            #else:
+                #newBoard[pos - 1] = "-"
+        brds = [newBoard]
+        #pdb.set_trace()
+        return self._analyseLevels(brds, nextToken, moveNo + 1, level + 1)
 
 
     def _analyseLevels(self, brds, token, move, lvl):
@@ -233,8 +235,15 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    x = TicTacToe()
+    #x = TicTacToe(brd = ["O", "O", "X", "-", "X", "-", "-", "-", "-"])         #brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"])
+    x = TicTacToe(brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"])
     #result = x.analyseLevels([["O", "X", "X", "X", "-", "X", "-", "O", "O"]], "O", 8, 2)
     #x = TicTacToe()
-    print(x.analyseMovesFor("O"))
-    #print(x.rankMove("X"))
+    #print("Rank move for board shown for O at position 1")
+    print("Rank moves for O")
+    #print()
+    #print(x)
+    #print()
+    #print(x.rankMove("O", 5))
+    #print(x.rankMove("O", 2))
+    print(x.rankMove("O", 2))
