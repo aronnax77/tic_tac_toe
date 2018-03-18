@@ -1,0 +1,21 @@
+Game 1
+
+Computer as X plays first on centre square.
+Human as O plays a corner
+Computer plays opposite corner
+Human plays 7
+Comp plays 4 ******
+Hum plays 3
+
+
+Game 2
+
+Human as O plays center
+Computer as X plays an empty corner say 3
+Human plays 7
+Comp plays 1 since the choice is of a side or corner
+Human blocks at 2
+Comp plays 8 *
+Human plays 6
+
+At this final position in game 2 it is clear there is still a bug in the code but it would seem that a number of strategic rules probably need to be added to any game code including filling the center on the first/second move if available.  Taking the oposite corner if an opponent fills a corner on the second move.  Choosing a corner rather that a side in the first place where there are choices.
