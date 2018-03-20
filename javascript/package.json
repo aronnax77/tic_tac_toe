@@ -1,0 +1,17 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "An implementation of the minimax algorithm for tic tac toe.",
+  "main": "ticTacToe.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "tictactoe"
+  ],
+  "author": "rtm",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^5.0.4"
+  }
+}
