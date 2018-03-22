@@ -170,5 +170,37 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
+  describe("Tests for incTerminalState", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      var brds = brd.getAllPosBoards();
+      assert.equal(true, TicTacToe.incTerminalState(brds));
+    });
+    it('should return false', function() {
+      var brds = [["O", "X", "X", "X", "", "X", "", "O", "O"],
+            ["O", "", "X", "X", "", "X", "X", "O", "O"]];
+      assert.equal(false, TicTacToe.incTerminalState(brds));
+    });
+    it('should return true', function() {
+      var brds = [["X", "O", "X", "X", "X", "O", "O", "X", "O"]];
+      assert.equal(true, TicTacToe.incTerminalState(brds));
+    });
+  });
+
+  describe.only("Tests for rankMove", function() {
+    it('should return 10', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(10, brd.rankMove(5));
+    });
+    it('should return -10', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(-10, brd.rankMove(2));
+    });
+    it('should return -10', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(-10, brd.rankMove(7));
+    });
+  });
+
 
 });

@@ -109,6 +109,55 @@ Board.prototype.getAllPosBoards = function() {
 };
 
 
+// method to rank the move specified by pos which takes an integer 1 - 9.
+Board.prototype.rankMove = function(pos) {
+  var token       = this.getNextTokenToPlay();
+  if(this.isAvailable(pos)) {
+    this.board[pos - 1] = token;
+  } else {
+    console.log("position already taken");
+  }
+
+  if(this.isWin()) {
+    return 10;
+  } else {
+    brds = [this.board];
+    return analyseLevels(brds, 2);
+  }
+};
+
+
+// helper function for rankMove to analyse each level given an array of boards
+// and the level
+function analyseLevels(brds, lvl) {
+  // get an array of boards for this level
+  var newBoards = [];         // holds all posible boards for this level
+  for(var i = 0; i < brds.length; i++) {
+    var tempBoard = new Board(brds[i]);
+    var collection = tempBoard.getAllPosBoards();
+    for(var j = 0; j < collection.length; j++) {
+      newBoards.push(collection[j]);
+    }
+  }
+  for(var k = 0; k < newBoards.length; k++) {
+    var firstBoard = new Board(newBoards[0]);
+    if(newBoards.length === 1 && firstBoard.isWin()) {
+      return 0;
+    } else {
+      if(incTerminalState(newBoards)) {
+        if(lvl % 2 === 0) {
+          return -(12 - lvl);
+        } else {
+          return (11 - lvl);
+        }
+      } else {
+        return analyseLevels(newBoards, lvl + 1);
+      }
+    }
+  }
+}
+
+
 // helper method to check the equality of arrays arr1, and arr2.  Returns
 // true or false
 function arraysEqual(arr1, arr2) {
@@ -124,7 +173,7 @@ function arraysEqual(arr1, arr2) {
 
 
 // helper method to check the equality of nested arrays arr1, and arr2.  Returns
-// true or false
+// true or false.  Deals with two dimensional arrays only
 function nestedArraysEqual(arr1, arr2) {
   if (arr1 === arr2) return true;
   if (arr1 == null || arr2 == null) return false;
@@ -137,15 +186,27 @@ function nestedArraysEqual(arr1, arr2) {
 }
 
 
+// function which takes an array of boards and checks to determine if a terminal
+// state is present in the array, either a win or a draw
+function incTerminalState(boards) {
+  for(var i = 0; i < boards.length; i++) {
+    var tempBoard = new Board(boards[i]);
+    //console.log(tempBoard);
+    if(tempBoard.isWin() || tempBoard.isDraw()) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
 
 TicTacToe.Board = Board;
 TicTacToe.arraysEqual = arraysEqual;
 TicTacToe.nestedArraysEqual = nestedArraysEqual;
+TicTacToe.incTerminalState = incTerminalState;
 module.exports = TicTacToe;
 
-var brd = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-var res = [ [ 'O', 'X', 'X', 'X', '', 'X', '', 'O', 'O' ],
-          [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
-          [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
-console.log(brd.getAllPosBoards());
-console.log(arraysEqual(res, brd.getAllPosBoards()));
+
+var x = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+console.log(x.rankMove(2));
