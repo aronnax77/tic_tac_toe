@@ -3,80 +3,7 @@ var assert = require("assert");
 
 describe("Unit tests for tictactoe", function() {
 
-  describe("Tests for arraysEqual", function() {
-    it('should return true from arraysEqual(arr1, arr2)', function() {
-      array1 = [1, 2, 3];
-      array2 = [1, 2, 3];
-      assert.equal(true, TicTacToe.arraysEqual(array1, array2));
-    });
-    it('should return false from arraysEqual(arr1, arr2)', function() {
-      array1 = [1, 2, 3];
-      array2 = [1, 2];
-      assert.equal(false, TicTacToe.arraysEqual(array1, array2));
-    });
-    it('should return false from arraysEqual(arr1, arr2)', function() {
-      array1 = [1, 2, 3];
-      array2 = null;
-      assert.equal(false, TicTacToe.arraysEqual(array1, array2));
-    });
-  });
-
-  describe("isWin", function() {
-    it('brd.isWin() should be true', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "X", "X", "", "O", "O"]);
-      assert.equal(true, brd.isWin());
-    });
-    it('brd.isWin() should be false', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-      assert.equal(false, brd.isWin());
-    });
-  });
-
-  describe("isAvailable", function() {
-    it('should return true for pos 2', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-      assert.equal(true, brd.isAvailable(2));
-    });
-    it('should return false for pos 6', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-      assert.equal(false, brd.isAvailable(6));
-    });
-  });
-
-  describe("available", function() {
-    it('should return [1, 4, 6]', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-      assert.equal(true, TicTacToe.arraysEqual([1, 4, 6], brd.available()));
-    });
-  });
-
-  describe("getNextMoveNum", function() {
-    it('should return 7', function() {
-      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-      assert.equal(7, brd.getNextMoveNum());
-    });
-    it('should return 7', function() {
-      var brd = new TicTacToe.Board(["O", "O", "X", "X", "", "X", "X", "O", "O"]);
-      assert.equal(9, brd.getNextMoveNum());
-    });
-    it('should return -1', function() {
-      var brd = new TicTacToe.Board(["O", "O", "X", "X", "O", "X", "X", "O", "O"]);
-      assert.equal(-1, brd.getNextMoveNum());
-    });
-  });
-
-  describe.only("isDraw", function() {
-    it('should return false', function() {
-      var brd = new TicTacToe.Board(["O", "X", "X", "X", "O", "X", "X", "O", "O"]);
-      assert.equal(false, brd.isDraw());
-    });
-    it('should return true', function() {
-      var brd = new TicTacToe.Board(["X", "X", "O", "O", "O", "X", "X", "O", "O"]);
-      assert.equal(true, brd.isDraw());
-    });
-  });
-
-  describe("initialization", function() {
+  describe("Tests for initialization", function() {
     it('O should equal brd.board[0]', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal("O", brd.board[0]);
@@ -124,4 +51,124 @@ describe("Unit tests for tictactoe", function() {
       assert.equal(true, TicTacToe.arraysEqual(arr, brd.board));
     });
   });
+
+  describe("Tests for arraysEqual", function() {
+    it('should return true from arraysEqual(arr1, arr2)', function() {
+      array1 = [1, 2, 3];
+      array2 = [1, 2, 3];
+      assert.equal(true, TicTacToe.arraysEqual(array1, array2));
+    });
+    it('should return false from arraysEqual(arr1, arr2)', function() {
+      array1 = [1, 2, 3];
+      array2 = [1, 2];
+      assert.equal(false, TicTacToe.arraysEqual(array1, array2));
+    });
+    it('should return false from arraysEqual(arr1, arr2)', function() {
+      array1 = [1, 2, 3];
+      array2 = null;
+      assert.equal(false, TicTacToe.arraysEqual(array1, array2));
+    });
+  });
+
+  describe("Tests for nestedArraysEqual", function() {
+    it('should return true', function() {
+      var array1 = [ [ 'O', 'X', 'X', 'X', '', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
+      var array2 = [ [ 'O', 'X', 'X', 'X', '', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
+      assert.equal(true, TicTacToe.nestedArraysEqual(array1, array2));
+    });
+    it('should return false', function() {
+      var array1 = [ [ 'O', 'X', 'X', 'X', '', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
+      var array2 = [ [ 'O', 'O', 'X', 'X', '', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
+                [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
+      assert.equal(false, TicTacToe.nestedArraysEqual(array1, array2));
+    });
+  });
+
+  describe("Tests for isWin", function() {
+    it('brd.isWin() should be true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "X", "X", "", "O", "O"]);
+      assert.equal(true, brd.isWin());
+    });
+    it('brd.isWin() should be false', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(false, brd.isWin());
+    });
+  });
+
+  describe("Tests for isAvailable", function() {
+    it('should return true for pos 2', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(true, brd.isAvailable(2));
+    });
+    it('should return false for pos 6', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(false, brd.isAvailable(6));
+    });
+  });
+
+  describe("Tests for available", function() {
+    it('should return [1, 4, 6]', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(true, TicTacToe.arraysEqual([1, 4, 6], brd.available()));
+    });
+  });
+
+  describe("Tests for getNextMoveNum", function() {
+    it('should return 7', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(7, brd.getNextMoveNum());
+    });
+    it('should return 7', function() {
+      var brd = new TicTacToe.Board(["O", "O", "X", "X", "", "X", "X", "O", "O"]);
+      assert.equal(9, brd.getNextMoveNum());
+    });
+    it('should return -1', function() {
+      var brd = new TicTacToe.Board(["O", "O", "X", "X", "O", "X", "X", "O", "O"]);
+      assert.equal(-1, brd.getNextMoveNum());
+    });
+  });
+
+  describe("Tests for isDraw", function() {
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["O", "X", "X", "X", "O", "X", "X", "O", "O"]);
+      assert.equal(false, brd.isDraw());
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "X", "O", "O", "O", "X", "X", "O", "O"]);
+      assert.equal(true, brd.isDraw());
+    });
+  });
+
+  describe("Tests for getNextTokenToPlay", function() {
+    it('should return X', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal("X", brd.getNextTokenToPlay());
+    });
+    it('should return O', function() {
+      var brd = new TicTacToe.Board(["X", "X", "", "O", "O", "X", "X", "O", ""]);
+      assert.equal("O", brd.getNextTokenToPlay());
+    });
+  });
+
+  describe("Tests for getAllPosBoards", function() {
+    it('should return [["O", "X", "X", "X", "", "X", "", "O", "O"], ["O", "", "X", "X", "X", "X", "", "O", "O"], ["O", "", "X", "X", "", "X", "X", "O", "O"]]', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      var res = [["O", "X", "X", "X", "", "X", "", "O", "O"], ["O", "", "X", "X", "X", "X", "", "O", "O"], ["O", "", "X", "X", "", "X", "X", "O", "O"]];
+      assert.equal(true, TicTacToe.nestedArraysEqual(res, brd.getAllPosBoards()));
+    });
+    it('should return [["X", "X", "O", "O", "O", "X", "X", "O", ""], ["X", "X", "", "O", "O", "X", "X", "O", "O"]]', function() {
+      var res = [["X", "X", "O", "O", "O", "X", "X", "O", ""], ["X", "X", "", "O", "O", "X", "X", "O", "O"]];
+      var brd = new TicTacToe.Board(["X", "X", "", "O", "O", "X", "X", "O", ""]);
+      assert.equal(true, TicTacToe.nestedArraysEqual(res, brd.getAllPosBoards()));
+    });
+  });
+
+
 });

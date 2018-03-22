@@ -58,6 +58,7 @@ Board.prototype.getNextMoveNum = function() {
   }
 };
 
+
 // method check if the specified board position is available and returns true or
 // false.  pos takes values from 1 to 9.
 Board.prototype.isAvailable = function(pos) {
@@ -81,6 +82,33 @@ Board.prototype.available = function() {
 };
 
 
+// method which returns the next token to play assuming X always starts the game
+Board.prototype.getNextTokenToPlay = function() {
+  var nextMoveNum = this.getNextMoveNum();
+  if(nextMoveNum % 2 === 0) {
+    return "O";       // "O" plays on all even moves
+  } else {
+    return "X";       // "X" plays on all odd moves
+  }
+};
+
+
+// method to return all possible boards given a board position
+// this assumes that X always starts the game
+Board.prototype.getAllPosBoards = function() {
+  var result = [];
+  var tempBoard = this.board.slice();
+  var possiblePositions = this.available();
+  var token             = this.getNextTokenToPlay();
+  for(var i = 0; i < possiblePositions.length; i++) {
+    var newBoard = tempBoard.slice();
+    newBoard[possiblePositions[i]] = token;
+    result.push(newBoard);
+  }
+  return result;
+};
+
+
 // helper method to check the equality of arrays arr1, and arr2.  Returns
 // true or false
 function arraysEqual(arr1, arr2) {
@@ -95,10 +123,29 @@ function arraysEqual(arr1, arr2) {
 }
 
 
+// helper method to check the equality of nested arrays arr1, and arr2.  Returns
+// true or false
+function nestedArraysEqual(arr1, arr2) {
+  if (arr1 === arr2) return true;
+  if (arr1 == null || arr2 == null) return false;
+  if (arr1.length != arr2.length) return false;
+
+  for (var i = 0; i < arr1.length; ++i) {
+    if (!arraysEqual(arr1[i], arr2[i])) return false;
+  }
+  return true;
+}
+
+
 
 TicTacToe.Board = Board;
 TicTacToe.arraysEqual = arraysEqual;
+TicTacToe.nestedArraysEqual = nestedArraysEqual;
 module.exports = TicTacToe;
 
-var brd = new Board(["A", "B", "C", "D", "E", "F", "G", "H", "I"]);
-console.log((JSON.stringify(brd.board) === JSON.stringify(["A", "B", "C", "D", "E", "F", "G", "H", "I"])));
+var brd = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+var res = [ [ 'O', 'X', 'X', 'X', '', 'X', '', 'O', 'O' ],
+          [ 'O', '', 'X', 'X', 'X', 'X', '', 'O', 'O' ],
+          [ 'O', '', 'X', 'X', '', 'X', 'X', 'O', 'O' ] ];
+console.log(brd.getAllPosBoards());
+console.log(arraysEqual(res, brd.getAllPosBoards()));
