@@ -187,7 +187,7 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
-  describe.only("Tests for rankMove", function() {
+  describe("Tests for rankMove", function() {
     it('should return 10', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(10, brd.rankMove(5));
@@ -199,6 +199,25 @@ describe("Unit tests for tictactoe", function() {
     it('should return -10', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(-10, brd.rankMove(7));
+    });
+  });
+
+
+  describe.only("Tests for analyseMovesFor", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      var result = [[1, -10], [4, 10], [6, -10]];
+      assert.equal(true, TicTacToe.nestedArraysEqual(result, brd.analyseMovesFor()));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "", "O"]);
+      var result = [[1, -10], [4, 10], [6, -10], [7, -10]];
+      assert.equal(true, TicTacToe.nestedArraysEqual(result, brd.analyseMovesFor()));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "X", "", "O", "", "", "", "O"]);
+      var result = [[1, 10], [3, 8], [5, 8], [6, 8], [7, 8]];
+      assert.equal(true, TicTacToe.nestedArraysEqual(result, brd.analyseMovesFor()));
     });
   });
 

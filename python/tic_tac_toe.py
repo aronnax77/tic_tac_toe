@@ -268,5 +268,5 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    x = TicTacToe(brd = ["X", "O", "X", "X", "O", "O", "O", "X", "-"])
+    x = TicTacToe(brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"])
     print(x.analyseMovesFor("X"))

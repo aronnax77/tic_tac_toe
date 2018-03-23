@@ -112,18 +112,39 @@ Board.prototype.getAllPosBoards = function() {
 // method to rank the move specified by pos which takes an integer 1 - 9.
 Board.prototype.rankMove = function(pos) {
   var token       = this.getNextTokenToPlay();
+  var tempBoard   = this.board.slice();
   if(this.isAvailable(pos)) {
-    this.board[pos - 1] = token;
+    tempBoard[pos - 1] = token;
   } else {
     console.log("position already taken");
   }
+  var tempBrd = new Board(tempBoard);
 
-  if(this.isWin()) {
+  if(tempBrd.isWin()) {
     return 10;
   } else {
-    brds = [this.board];
+    brds = [tempBrd.board];
     return analyseLevels(brds, 2);
   }
+};
+
+
+// method which returns an analysis of the Moves available at the current board
+// position.  Returns an array of arrays providing the index and the rank of the
+// move
+Board.prototype.analyseMovesFor = function() {
+  var result = [];          // holds the result
+  var tempBoard = this.board.slice(); // copy present boardvar tempBoardObj = new Board(tempBoard);
+  //var newBoard  = tempBoard;
+  var choices   = this.available();   // get a list of available indecies
+  for(var i = 0; i < choices.length; i++) {
+    var tempBoardObj = new Board(tempBoard);
+    var index = choices[i];
+    var rank = tempBoardObj.rankMove(index + 1);
+    //newBoard = tempBoard;
+    result.push([index, rank]);
+  }
+  return result;
 };
 
 
@@ -208,5 +229,6 @@ TicTacToe.incTerminalState = incTerminalState;
 module.exports = TicTacToe;
 
 
-var x = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-console.log(x.rankMove(2));
+var brd = new TicTacToe.Board();
+//var result = [[1, -10], [4, 10], [6, -10]];
+console.log(brd.analyseMovesFor());

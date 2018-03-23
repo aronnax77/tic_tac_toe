@@ -96,6 +96,7 @@ def test_analyseMovesFor():
     assert(x.analyseMovesFor("O", brd = ["O", "-", "X", "X", "-", "X", "-", "-", "O"]) == [(1, -10), (4, 10), (6, -10), (7, -10)])
     x = ttt.TicTacToe(brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"])
     assert(x.analyseMovesFor("O", brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"]) == [(1, 8), (3, -10), (5, -10), (6, -10), (7, -10)])
+    assert(x.analyseMovesFor("X", brd = ["X", "-", "X", "-", "O", "-", "-", "-", "O"]) == [(1, 10), (3, 8), (5, 8), (6, 8), (7, 8)])
 
 def test_isAvailable():
     x = ttt.TicTacToe(brd = ["O", "-", "X", "X", "-", "X", "-", "O", "O"])
