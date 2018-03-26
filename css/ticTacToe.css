@@ -4,18 +4,57 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: lightgrey;
+}
+
+.title {
+  font-size: 30px;
+  text-align: center;
+  width: 28vw;
+  padding: 0.1vw;
+  color: #6b6d85;
+  margin: 2vw auto;
+}
+
 #app {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 600px;
-  height: 600px;
-  background-color: lightyellow;
-  margin: 100px auto
+  width: 28vw;
+  height: 30vw;
+  background-color: #e6cc89;
+  border-radius: 1vw;
+  margin: 2.5vw auto
 }
 
 .game {
-  width: 500px;
-  height: 500px;
-  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 24vw;
+  height: 24vw;
+  color: #fff;
+  background: radial-gradient(#6b6d85, #373d2d);
+}
+
+.wording {
+  padding: 1.5vw;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5vw;
+
+}
+
+button {
+  background-color: orange;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.4em;
+  padding: 0.5em;
+  border-radius: 50%;
 }

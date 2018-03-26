@@ -5,17 +5,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Tic Tac Toe</title>
 </head>
 <body>
+
+  <div class="title">
+    <h1>Tic Tac Toe</h1>
+  </div>
 
   <div id="app">
     <div class="game">
 
-
+      <component :is="comp"></component>
 
     </div>
   </div>
+
+  <template id="screen1">
+    <div>
+      <div class="wording">
+        <h1>One or two players?</h1>
+      </div>
+
+      <div class="btns">
+        <button class="one-player">One Player</button>
+        <button class="two-players">Two Players</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="screen2">
+    <div>
+      <div class="wording">
+        <h1>Choose X or O?</h1>
+        <p>(X plays first)</p>
+      </div>
+
+      <div class="btns">
+        <button class="token-x">X</button>
+        <button class="token-o">O</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="screen3">
+    <div>
+      <div class="wording">
+        <h1>Player1 X or O?</h1>
+        <p>(X plays first)</p>
+      </div>
+
+      <div class="btns">
+        <button class="token-x">X</button>
+        <button class="token-o">O</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+  <script src="js/ticTacToe.js"></script>
 
 </body>
 </html>
