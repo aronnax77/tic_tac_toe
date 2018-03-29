@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: lightgrey;
+  background-color: #eee;
 }
 
 .title {
@@ -23,9 +23,39 @@ body {
   align-items: center;
   width: 28vw;
   height: 30vw;
-  background-color: #e6cc89;
+  background-color: lightyellow;  /*#e6cc89;*/
   border-radius: 1vw;
-  margin: 2.5vw auto
+  margin: 2.5vw auto;
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.4) inset,
+                      5px 5px 10px rgba(0, 0, 0, 0.1) inset,
+                      5px 5px 20px rgba(0, 0, 0, 0.7);
+}
+
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+}
+
+.bottom-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1em;
+}
+
+.player-one {
+  margin-left: 20px;
+}
+
+.player-two {
+  margin-right: 20px;
+}
+
+.top-panel, .bottom-panel {
+  width: 24vw;
+  height: 3vw;
 }
 
 .game {
@@ -37,6 +67,7 @@ body {
   height: 24vw;
   color: #fff;
   background: radial-gradient(#6b6d85, #373d2d);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7) inset;
 }
 
 .wording {
@@ -57,4 +88,20 @@ button {
   font-size: 1.4em;
   padding: 0.5em;
   border-radius: 50%;
+}
+
+.reset, .again {
+  width: 150px;
+  font-size: 1.2em;
+  padding: 0.3em;
+  color: #000;
+  background-color: lightblue;
+}
+
+.reset {
+  margin-right: 20px;
+}
+
+.again {
+  margin-left: 20px;
 }

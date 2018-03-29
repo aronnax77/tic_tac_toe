@@ -14,6 +14,12 @@ Vue.component("screen-three", {
 var main = new Vue({
   el: "#app",
   data: {
-    comp: "screen-three"
+    playerone: "Player 1",
+    playertwo: "Computer",
+    tokenone: "(X)",
+    tokentwo: "(O)",
+    scoreone: " | 0",
+    scoretwo: " | 0",
+    component: "screen-three"
   }
 });
