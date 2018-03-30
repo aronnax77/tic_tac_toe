@@ -9,7 +9,7 @@ body {
 }
 
 .title {
-  font-size: 30px;
+  font-size: 1.5vw;
   text-align: center;
   width: 28vw;
   padding: 0.1vw;
@@ -35,7 +35,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2em;
+  font-size: 1vw;
 }
 
 .bottom-panel {
@@ -70,6 +70,14 @@ body {
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7) inset;
 }
 
+.game h2 {
+  font-size: 2vw;
+}
+
+.game p {
+  font-size: 1vw;
+}
+
 .wording {
   padding: 1.5vw;
 }
@@ -91,8 +99,8 @@ button {
 }
 
 .reset, .again {
-  width: 150px;
-  font-size: 1.2em;
+  width: 7.8vw;
+  font-size: 1vw;
   padding: 0.3em;
   color: #000;
   background-color: lightblue;
@@ -104,4 +112,104 @@ button {
 
 .again {
   margin-left: 20px;
+}
+
+@media only screen and (max-width:1200px) {
+  /* For mobile phones: (x1.5)*/
+  .title {
+    font-size: 2.25vw;
+    width: 42vw;
+  }
+
+  #app {
+    width: 42vw;
+    height: 45vw;
+  }
+
+  .game {
+    width: 36vw;
+    height: 36vw;
+  }
+
+  .game h2 {
+    font-size: 3vw;
+  }
+
+  .game p {
+    font-size: 1.5vw;
+  }
+
+  .top-panel {
+    font-size: 1.5vw;
+  }
+
+  .top-panel, .bottom-panel {
+    width: 36vw;
+    height: 4.5vw;
+  }
+
+  .btns {
+    padding: 2.25vw;
+
+  }
+
+  button {
+    font-size: 2.1vw;
+  }
+
+  .reset, .again {
+    width: 11.7vw;
+    font-size: 1.5vw;
+  }
+
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones: (x2.8)*/
+  .title {
+    font-size: 4.2vw;
+    width: 67vw;
+  }
+
+  #app {
+    width: 78vw;
+    height: 84vw;
+  }
+
+  .game {
+    width: 67vw;
+    height: 67vw;
+  }
+
+  .game h2 {
+    font-size: 5.6vw;
+  }
+
+  .game p {
+    font-size: 2.8vw;
+  }
+
+  .top-panel {
+    font-size: 2.8vw;
+  }
+
+  .top-panel, .bottom-panel {
+    width: 67vw;
+    height: 8.4vw;
+  }
+
+  .btns {
+    padding: 4.2vw;
+
+  }
+
+  button {
+    font-size: 3.9vw;
+  }
+
+  .reset, .again {
+    width: 21.8vw;
+    font-size: 2.8vw;
+  }
+}
 }
