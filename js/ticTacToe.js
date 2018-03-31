@@ -23,19 +23,43 @@ Vue.component("screen-five", {
 var main = new Vue({
   el: "#app",
   data: {
+    resetEnabled: true,
+    singlePlayer: true,
     playerone: "Player 1",
-    playertwo: "Computer",
-    tokenone: "X",
-    tokentwo: "O",
+    playertwo: "",
+    tokenone: "",
+    tokentwo: "",
     scoreone: 0,
     scoretwo: 0,
-    oneIsActive: true,
+    oneIsActive: false,
     twoIsActive: false,
-    showPlayers: true,
-    board: ["O", "", "X", "X", "", "X", "", "O", "O"],
-    component: "screen-five"
+    showPlayers: false,
+    board: ["", "", "", "", "", "", "", "", ""],
+    component: "screen-one"
   },
   methods: {
+    reset: function() {
+      this.singlePlayer = true;
+      this.playertwo = "";
+      this.tokenone = "";
+      this.tokentwo = "";
+      this.scoreone = 0;
+      this.scoretwo = 0;
+      this.oneIsActive = false;
+      this.twoIsActive = false;
+      this.showPlayers = false;
+      this.board = ["", "", "", "", "", "", "", "", ""];
+      this.component = "screen-one";
+    },
+    setPlayer: function(arg) {
+      if(arg === 1) {
+        this.playertwo = "Computer";
+        this.component = "screen-two";
+      } else if(arg === 2) {
+        this.playertwo = "Player 2";
+        this.component = "screen-four";
+      }
+    },
     playNext: function(i) {
       this.$set(this.board, i, "X");
     }
