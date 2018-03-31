@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower');
+
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +12,7 @@ body {
 }
 
 .title {
+  font-family: 'Indie Flower', cursive;
   font-size: 1.5vw;
   text-align: center;
   width: 28vw;
@@ -45,12 +49,20 @@ body {
   font-size: 1em;
 }
 
+.player-one, .player-two {
+  padding-bottom: 0.5em;
+}
+
 .player-one {
   margin-left: 20px;
 }
 
 .player-two {
   margin-right: 20px;
+}
+
+.green-one, .green-two {
+  border-bottom: 4px solid green;
 }
 
 .top-panel, .bottom-panel {
@@ -66,8 +78,26 @@ body {
   width: 24vw;
   height: 24vw;
   color: #fff;
+  font-family: 'Indie Flower', cursive;
   background: radial-gradient(#6b6d85, #373d2d);
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7) inset;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  width:inherit;
+  height: inherit;
+}
+
+.square {
+  font-size: 4vw;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #fff;
 }
 
 .game h2 {
@@ -79,13 +109,14 @@ body {
 }
 
 .wording {
-  padding: 1.5vw;
+  text-align: center;
+  padding: 2vw;
 }
 
 .btns {
   display: flex;
-  justify-content: space-between;
-  padding: 1.5vw;
+  justify-content:space-around;
+  padding: 1.5vw 3vw 0 3vw;
 
 }
 

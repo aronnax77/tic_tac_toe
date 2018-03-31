@@ -17,12 +17,12 @@
 
     <div class="outer">
       <div class="top-panel">
-        <div class="player-one">{{ tokenone }} {{ playerone }} {{ scoreone }}</div>
-        <div class="player-two">{{ tokentwo }} {{ playertwo }} {{ scoretwo }}</div>
+        <div v-show="showPlayers" class="player-one" :class="{ 'green-one': oneIsActive }">({{ tokenone }}) {{ playerone }} | {{ scoreone }}</div>
+        <div v-show="showPlayers" class="player-two" :class="{ 'green-two': twoIsActive }">({{ tokentwo }}) {{ playertwo }} | {{ scoretwo }}</div>
       </div>
       <div class="game">
 
-        <component :is="component"></component>
+        <component :is="component" :board="board" @play="playNext"></component>
 
       </div>
       <div class="bottom-panel">
@@ -36,7 +36,7 @@
   <template id="screen1">
     <div>
       <div class="wording">
-        <h2>One or two players?</h2>
+        <h2>How do you want to play?</h2>
       </div>
 
       <div class="btns">
@@ -49,7 +49,7 @@
   <template id="screen2">
     <div>
       <div class="wording">
-        <h2>Choose X or O?</h2>
+        <h2>Would you like to be X or O?</h2>
         <p>(X plays first)</p>
       </div>
 
@@ -63,7 +63,7 @@
   <template id="screen3">
     <div>
       <div class="wording">
-        <h2>Player1 X or O?</h2>
+        <h2>Would you like to be X or O?</h2>
         <p>(X plays first)</p>
       </div>
 
@@ -71,6 +71,36 @@
         <button class="token-x">X</button>
         <button class="token-o">O</button>
       </div>
+    </div>
+  </template>
+
+  <template id="screen4">
+    <div>
+      <div class="wording">
+        <h2>Player1 would you like X or O?</h2>
+        <p>(X plays first)</p>
+      </div>
+
+      <div class="btns">
+        <button class="token-x">X</button>
+        <button class="token-o">O</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="screen5">
+    <div class="board">
+      <!--<div class="square" v-for="(sq, index) in board"
+                          @click="playNext(index)">{{ sq }}</div>-->
+      <div class="square" @click="$emit('play', 0)">{{ board[0] }}</div>
+      <div class="square" @click="$emit('play', 1)">{{ board[1] }}</div>
+      <div class="square" @click="$emit('play', 2)">{{ board[2] }}</div>
+      <div class="square" @click="$emit('play', 3)">{{ board[3] }}</div>
+      <div class="square" @click="$emit('play', 4)">{{ board[4] }}</div>
+      <div class="square" @click="$emit('play', 5)">{{ board[5] }}</div>
+      <div class="square" @click="$emit('play', 6)">{{ board[6] }}</div>
+      <div class="square" @click="$emit('play', 7)">{{ board[7] }}</div>
+      <div class="square" @click="$emit('play', 8)">{{ board[8] }}</div>
     </div>
   </template>
 
