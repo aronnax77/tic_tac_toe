@@ -100,6 +100,10 @@ body {
   border: 2px solid #fff;
 }
 
+.green {
+  color: green;
+}
+
 .game h2 {
   font-size: 2vw;
 }

@@ -24,12 +24,16 @@
 
         <component :is="component"
                    :board="board"
+                   :win="win"
                    @play="playNext"
-                   @player="setPlayer"></component>
+                   @player="setPlayer"
+                   @token="setTokens"
+                   ></component>
+
 
       </div>
       <div class="bottom-panel">
-        <button class="again" disabled>Play again</button>
+        <button class="again" @click="again">Play again</button>
         <button class="reset" @click="reset">Reset</button>
       </div>
     </div>
@@ -57,8 +61,8 @@
       </div>
 
       <div class="btns">
-        <button class="token-x">X</button>
-        <button class="token-o">O</button>
+        <button class="token-x" @click="$emit('token', 'X')">X</button>
+        <button class="token-o" @click="$emit('token', 'O')">O</button>
       </div>
     </div>
   </template>
@@ -71,13 +75,13 @@
       </div>
 
       <div class="btns">
-        <button class="token-x">X</button>
-        <button class="token-o">O</button>
+        <button class="token-x" @click="$emit('token', 'X')">X</button>
+        <button class="token-o" @click="$emit('token', 'O')">O</button>
       </div>
     </div>
   </template>
 
-  <template id="screen4">
+  <!--<template id="screen4">
     <div>
       <div class="wording">
         <h2>Player 1 would you like X or O?</h2>
@@ -89,26 +93,27 @@
         <button class="token-o">O</button>
       </div>
     </div>
-  </template>
+  </template>-->
 
-  <template id="screen5">
+  <template id="screen4">
     <div class="board">
       <!--<div class="square" v-for="(sq, index) in board"
                           @click="playNext(index)">{{ sq }}</div>-->
-      <div class="square" @click="$emit('play', 0)">{{ board[0] }}</div>
-      <div class="square" @click="$emit('play', 1)">{{ board[1] }}</div>
-      <div class="square" @click="$emit('play', 2)">{{ board[2] }}</div>
-      <div class="square" @click="$emit('play', 3)">{{ board[3] }}</div>
-      <div class="square" @click="$emit('play', 4)">{{ board[4] }}</div>
-      <div class="square" @click="$emit('play', 5)">{{ board[5] }}</div>
-      <div class="square" @click="$emit('play', 6)">{{ board[6] }}</div>
-      <div class="square" @click="$emit('play', 7)">{{ board[7] }}</div>
-      <div class="square" @click="$emit('play', 8)">{{ board[8] }}</div>
+      <div class="square" :class="{ green: win[0] }" @click="$emit('play', 0)">{{ board[0] }}</div>
+      <div class="square" :class="{ green: win[1] }" @click="$emit('play', 1)">{{ board[1] }}</div>
+      <div class="square" :class="{ green: win[2] }" @click="$emit('play', 2)">{{ board[2] }}</div>
+      <div class="square" :class="{ green: win[3] }" @click="$emit('play', 3)">{{ board[3] }}</div>
+      <div class="square" :class="{ green: win[4] }" @click="$emit('play', 4)">{{ board[4] }}</div>
+      <div class="square" :class="{ green: win[5] }" @click="$emit('play', 5)">{{ board[5] }}</div>
+      <div class="square" :class="{ green: win[6] }" @click="$emit('play', 6)">{{ board[6] }}</div>
+      <div class="square" :class="{ green: win[7] }" @click="$emit('play', 7)">{{ board[7] }}</div>
+      <div class="square" :class="{ green: win[8] }" @click="$emit('play', 8)">{{ board[8] }}</div>
     </div>
   </template>
 
   <script src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
   <script src="js/ticTacToe.js"></script>
+  <script src="js/minimax.js"></script>
 
 </body>
 </html>
