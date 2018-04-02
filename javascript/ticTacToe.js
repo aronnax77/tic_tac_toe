@@ -11,8 +11,8 @@ function Board(arr) {
 }
 
 
-// method checks if the current board position is a win. Returns true or false
-Board.prototype.isWin = function() {
+// method returns the array of rows for the board
+Board.prototype.getRows = function() {
   this.row1   = [this.board[0], this.board[1], this.board[2]];
   this.row2   = [this.board[3], this.board[4], this.board[5]];
   this.row3   = [this.board[6], this.board[7], this.board[8]];
@@ -23,12 +23,53 @@ Board.prototype.isWin = function() {
   this.diag2  = [this.board[2], this.board[4], this.board[6]];
   this.rows   = [this.row1, this.row2, this.row3, this.col1, this.col2,
                   this.col3, this.diag1, this.diag2];
+
+  return this.rows;
+};
+
+
+// method checks if the current board position is a win. Returns true or false
+Board.prototype.isWin = function() {
+  this.getRows();
   for(var i = 0; i < 8; i++) {
     if(arraysEqual(this.rows[i], ["X", "X", "X"]) || arraysEqual(this.rows[i], ["O", "O", "O"])) {
       return true;
     }
   }
   return false;
+};
+
+
+// method returns an array of indecies for the winning row.  If there is no winning
+// row -1 is returned
+Board.prototype.getWinningRow = function() {
+  this.getRows();
+  if(this.isWin()) {
+    for(var i = 0; i < 8; i++) {
+      if(arraysEqual(this.rows[i], ["X", "X", "X"]) || arraysEqual(this.rows[i], ["O", "O", "O"])) {
+        switch(i) {
+          case 0:
+            return [0, 1, 2];
+          case 1:
+            return [3, 4, 5];
+          case 2:
+            return [6, 7, 8];
+          case 3:
+            return [0, 3, 6];
+          case 4:
+            return [1, 4, 7];
+          case 5:
+            return [2, 5, 8];
+          case 6:
+            return [0, 4, 8];
+          case 7:
+            return [2, 4, 6];
+        }
+      }
+    }
+  } else {
+    return -1;
+  }
 };
 
 
@@ -229,6 +270,9 @@ TicTacToe.incTerminalState = incTerminalState;
 module.exports = TicTacToe;
 
 
-var brd = new TicTacToe.Board();
+//var brd = new TicTacToe.Board();
 //var result = [[1, -10], [4, 10], [6, -10]];
-console.log(brd.analyseMovesFor());
+//console.log(brd.analyseMovesFor());
+var brd = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+console.log(brd.isWin());
+console.log(brd.getWinningRow());

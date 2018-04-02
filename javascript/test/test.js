@@ -102,6 +102,17 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
+  describe("Tests for getWinningRow", function() {
+    it('brd.getWinningRow() should return [3, 4, 5]', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "X", "X", "", "O", "O"]);
+      assert.equal(true, TicTacToe.arraysEqual([3, 4, 5], brd.getWinningRow()));
+    });
+    it('brd.getWinningRow() should return -1', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(-1, brd.getWinningRow());
+    });
+  });
+
   describe("Tests for isAvailable", function() {
     it('should return true for pos 2', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
@@ -203,7 +214,7 @@ describe("Unit tests for tictactoe", function() {
   });
 
 
-  describe.only("Tests for analyseMovesFor", function() {
+  describe("Tests for analyseMovesFor", function() {
     it('should return true', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       var result = [[1, -10], [4, 10], [6, -10]];
