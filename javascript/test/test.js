@@ -232,5 +232,20 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
+  describe.only("Test for selectBestMove", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
+      assert.equal(true, TicTacToe.arraysEqual([4, 10], brd.selectBestMove()));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "", "O"]);
+      assert.equal(true, TicTacToe.arraysEqual([4, 10], brd.selectBestMove()));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "X", "", "O", "", "", "", "O"]);
+      assert.equal(true, TicTacToe.nestedArraysEqual([1, 10], brd.selectBestMove()));
+    });
+  });
+
 
 });
