@@ -186,6 +186,23 @@ Board.prototype.analyseMovesFor = function() {
 };
 
 
+// method to select the best move based on analyseMovesFor()
+// returns the best move in the form [index, rank]
+Board.prototype.selectBestMove = function() {
+  var tempBoard = new Board(brd=this.board);
+  var moves = tempBoard.analyseMovesFor();
+  var selection = moves[0];
+  var largest = moves[0][1];
+  for(var i = 0; i < moves.length; i++) {
+    if(largest < moves[i][1]) {
+      largest = moves[i][1];
+      selection = moves[i];
+    }
+  }
+  return selection;
+};
+
+
 // helper function for rankMove to analyse each level given an array of boards
 // and the level
 function analyseLevels(brds, lvl) {
