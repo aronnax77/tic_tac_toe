@@ -232,7 +232,7 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
-  describe.only("Test for selectBestMove", function() {
+  describe("Test for selectBestMove", function() {
     it('should return true', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(true, TicTacToe.arraysEqual([4, 10], brd.selectBestMove()));
@@ -244,6 +244,51 @@ describe("Unit tests for tictactoe", function() {
     it('should return true', function() {
       var brd = new TicTacToe.Board(["X", "", "X", "", "O", "", "", "", "O"]);
       assert.equal(true, TicTacToe.nestedArraysEqual([1, 10], brd.selectBestMove()));
+    });
+  });
+
+  describe("Tests for selectTopRankedMovesFor", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      var expected = [ [ 0, 8 ], [ 3, 8 ], [ 5, 8 ], [ 8, 8 ] ];
+      assert.equal(true, TicTacToe.nestedArraysEqual(expected, brd.selectTopRankedMovesFor()));
+    });
+  });
+
+  describe("Test for getFirstLargestSelection", function() {
+    it('should return true', function() {
+      var selection = [ [ 0, 8 ], [ 3, 8 ], [ 5, 8 ], [ 7, -8 ], [ 8, 8 ] ];
+      assert.equal(true, );
+    });
+  });
+
+  describe("Test for isFork", function() {
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isFork(0));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isFork(3));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isFork(7));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isFork(8));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isFork(5));
+    });
+  });
+
+  describe.only("Test for selectBestMove", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, TicTacToe.arraysEqual([5, 8], brd.selectBestMove()));
     });
   });
 

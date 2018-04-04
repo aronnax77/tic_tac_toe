@@ -28,6 +28,32 @@ Board.prototype.getRows = function() {
 };
 
 
+// method that returns the rows for a given index - no tests
+Board.prototype.getRowsForIndex = function(index) {
+  this.getRows();
+  switch(index) {
+    case 0:
+      return [this.row1, this.col1, this.diag1];
+    case 1:
+      return [this.row1, this.col2];
+    case 2:
+      return [this.row1, this.col3, this.diag2];
+    case 3:
+      return [this.row2, this.col1];
+    case 4:
+      return [this.row2, this.col2, this.diag1, this.diag2];
+    case 5:
+      return [this.row2, this.col3];
+    case 6:
+      return [this.row3, this.col1, this.diag2];
+    case 7:
+      return [this.row3, this.col2];
+    case 8:
+      return [this.row3, this.col3, this.diag1];
+  }
+};
+
+
 // method checks if the current board position is a win. Returns true or false
 Board.prototype.isWin = function() {
   this.getRows();
@@ -175,7 +201,7 @@ Board.prototype.rankMove = function(pos) {
 // move
 Board.prototype.analyseMovesFor = function() {
   var result = [];          // holds the result
-  var tempBoard = this.board.slice(); // copy present boardvar tempBoardObj = new Board(tempBoard);
+  var tempBoard = this.board.slice(); // copy present board
   //var newBoard  = tempBoard;
   var choices   = this.available();   // get a list of available indecies
   for(var i = 0; i < choices.length; i++) {
@@ -192,8 +218,23 @@ Board.prototype.analyseMovesFor = function() {
 // method to select the best move based on analyseMovesFor()
 // returns the best move in the form [index, rank]
 Board.prototype.selectBestMove = function() {
-  var tempBoard = new Board(brd=this.board);
-  var moves = tempBoard.analyseMovesFor();
+  var token = this.getNextTokenToPlay();
+  var selection = this.selectTopRankedMovesFor();
+  // check for posibility of a fork
+  for(var i = 0; i < selection.length; i++) {
+    if(this.isFork(selection[i][0])) {
+      // play at this position
+      return selection[i];
+    }
+  }
+  // no fork return first top ranked move
+  return selection[0];
+};
+
+
+// helper function to return value of largest rank as an integer given an array
+// containing the analysed moves for this position
+function getFirstLargestSelection(moves) {
   var selection = moves[0];
   var largest = moves[0][1];
   for(var i = 0; i < moves.length; i++) {
@@ -203,6 +244,50 @@ Board.prototype.selectBestMove = function() {
     }
   }
   return selection;
+}
+
+
+// method returns an array  of top ranked moves
+Board.prototype.selectTopRankedMovesFor = function() {
+  var result = [];
+  var movesFromAnalysis = this.analyseMovesFor();
+  var selection = getFirstLargestSelection(movesFromAnalysis);
+  var topRank   = selection[1];
+  for(var i = 0; i < movesFromAnalysis.length; i++) {
+    if(movesFromAnalysis[i][1] === topRank) {
+      result.push(movesFromAnalysis[i]);
+    }
+  }
+  return result;
+};
+
+
+// method that determines if a selected play produces a fork.  Returns true if
+// a fork can be created from that position, otherwise false
+Board.prototype.isFork = function(index) {
+  var token = this.getNextTokenToPlay();
+  var rows = this.getRowsForIndex(index);
+  var prospect = 0;       // a prospect contains one token and two spaces
+  for(var i = 0; i < rows.length; i++) {
+
+    if(rows[i].indexOf(token) !== -1) {   // row contains at least one tokenn
+      // count spaces
+      var spaces = 0;
+      for(var k = 0; k < 3; k++) {
+        if(rows[i][k] === "") {
+          spaces += 1;
+        }
+      }
+      if(spaces > 1) {
+        prospect += 1;
+      }
+    }
+  }
+  if(prospect >= 2) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 
@@ -284,9 +369,10 @@ TicTacToe.Board = Board;
 TicTacToe.arraysEqual = arraysEqual;
 TicTacToe.nestedArraysEqual = nestedArraysEqual;
 TicTacToe.incTerminalState = incTerminalState;
+TicTacToe.getFirstLargestSelection = getFirstLargestSelection;
 module.exports = TicTacToe;
 
 
-var brd = new Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
-var result = brd.selectBestMove();
+var brd = new Board(["", "O", "X", "", "X", "", "O", "", ""]);
+var result = brd.isFork(5);
 console.log(result);
