@@ -292,5 +292,28 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
+  describe.only("Test for isCorner", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isCorner(0));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isCorner(8));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isCorner(3));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isCorner(5));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isCorner(7));
+    });
+  });
+
 
 });

@@ -227,7 +227,15 @@ Board.prototype.selectBestMove = function() {
       return selection[i];
     }
   }
-  // no fork return first top ranked move
+  // no fork return first top ranked move then check for possibility of play at
+  // a corner
+  for(var k = 0; k < selection.length; k++) {
+    if(this.isCorner(index)) {
+      return selection[i];
+    }
+  }
+  // if neither a fork or a corner is available to play then return the first
+  // top ranked move
   return selection[0];
 };
 
@@ -284,6 +292,19 @@ Board.prototype.isFork = function(index) {
     }
   }
   if(prospect >= 2) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
+
+// method that determines if a selected play produces a corner move.  Returns
+// true or false
+Board.prototype.isCorner = function(index) {
+  var cornerIndexes = [0, 2, 6, 8];
+  if(cornerIndexes.indexOf(index) !== -1) {
     return true;
   } else {
     return false;
