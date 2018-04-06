@@ -178,6 +178,7 @@ Board.prototype.getAllPosBoards = function() {
 
 // method to rank the move specified by pos which takes an integer 1 - 9.
 Board.prototype.rankMove = function(pos) {
+  debugger;
   var token       = this.getNextTokenToPlay();
   var tempBoard   = this.board.slice();
   if(this.isAvailable(pos)) {
@@ -315,6 +316,7 @@ Board.prototype.isCorner = function(index) {
 // helper function for rankMove to analyse each level given an array of boards
 // and the level
 function analyseLevels(brds, lvl) {
+  debugger;
   // get an array of boards for this level
   var newBoards = [];         // holds all posible boards for this level
   for(var i = 0; i < brds.length; i++) {
@@ -326,9 +328,12 @@ function analyseLevels(brds, lvl) {
   }
   for(var k = 0; k < newBoards.length; k++) {
     var firstBoard = new Board(newBoards[0]);
+    debugger;
     if(newBoards.length === 1 && firstBoard.isWin()) {
+      return -10;
+    } else if(newBoards.length === 1 && firstBoard.isDraw()) {
       return 0;
-    } else {
+    }else {
       if(incTerminalState(newBoards)) {
         if(lvl % 2 === 0) {
           return -(12 - lvl);
@@ -394,6 +399,6 @@ TicTacToe.getFirstLargestSelection = getFirstLargestSelection;
 module.exports = TicTacToe;
 
 
-var brd = new Board(["O", "", "", "", "X", "", "O", "", ""]);
+var brd = new Board(["O", "X", "X", "X", "X", "O", "O", "", ""]);
 var result = brd.selectTopRankedMovesFor();
 console.log(result);

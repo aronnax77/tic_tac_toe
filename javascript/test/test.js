@@ -198,7 +198,7 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
-  describe("Tests for rankMove", function() {
+  describe.only("Tests for rankMove", function() {
     it('should return 10', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(10, brd.rankMove(5));
@@ -210,6 +210,14 @@ describe("Unit tests for tictactoe", function() {
     it('should return -10', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(-10, brd.rankMove(7));
+    });
+    it('should return 0', function() {
+      var brd = new TicTacToe.Board(["O", "X", "X", "X", "X", "O", "O", "", ""]);
+      assert.equal(0, brd.rankMove(8));
+    });
+    it('should return -10', function() {
+      var brd = new TicTacToe.Board(["O", "X", "X", "X", "X", "O", "O", "", ""]);
+      assert.equal(-10, brd.rankMove(9));
     });
   });
 
@@ -285,14 +293,14 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
-  describe.only("Test for selectBestMove", function() {
+  describe("Test for selectBestMove", function() {
     it('should return true', function() {
       var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
       assert.equal(true, TicTacToe.arraysEqual([5, 8], brd.selectBestMove()));
     });
   });
 
-  describe.only("Test for isCorner", function() {
+  describe("Test for isCorner", function() {
     it('should return true', function() {
       var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
       assert.equal(true, brd.isCorner(0));
