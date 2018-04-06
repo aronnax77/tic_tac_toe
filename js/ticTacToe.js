@@ -101,10 +101,17 @@ var main = new Vue({
     },
     playNext: function(i) {
       if(this.singlePlayer) {
-        var token = this.tokenone;
-        this.$set(this.board, i, token);
-        playComputer();
-      } else {                            // two individual players
+        if(this.oneIsActive === true) {
+          var token = this.tokenone;
+          this.$set(this.board, i, token);
+          toggleActivePlayer();
+          playComputer();
+          //toggleActivePlayer();
+        } /*else if(this.twoIsActive === true) {
+          playComputer();
+          toggleActivePlayer();
+        }*/
+      } else if(!this.singlePlayer) {        // two individual players
         // check that square is available
         var tempBoard = new Board(brd=this.board);
         if(tempBoard.isAvailable(i + 1) && this.playAgainEnabled === false) {
@@ -126,59 +133,70 @@ var main = new Vue({
 
 // function to handle computers moves
 function playComputer() {
+  //console.log("two is active " + main.twoIsActive);                               // ?????
+  if(main.twoIsActive === true) {
+    var tempBoard = new Board(brd=main.board);
+    var nextMove  = tempBoard.getNextMoveNum();
+    //console.log("tempBoard = " + tempBoard.board);
+    //console.log("nextMove = " + nextMove);
 
-  var tempBoard = new Board(brd=main.board);
-  var nextMove  = tempBoard.getNextMoveNum();
-
-  switch(nextMove) {
-    case 1:
-      main.$set(main.board, 4, "X");
-      break;
-    case 2:
-      if(tempBoard.isAvailable(5)) {
-        main.$set(main.board, 4, "O");
-      } else {
-        main.$set(main.board, randCornerIndex(), "O");
-      }
-      break;
-    case 3:
-      var result = cornerContains(tempBoard.board, "O");
-      if(nextMove === 3 && result !== -1) {
-        switch(result) {
-          case 0:
-            main.$set(main.board, 8, "X");
-            break;
-            case 2:
-              main.$set(main.board, 6, "X");
-              break;
-            case 6:
-              main.$set(main.board, 2, "X");
-              break;
-            case 8:
-              main.$set(main.board, 0, "X");
-              break;
+    switch(nextMove) {
+      case 1:
+        main.$set(main.board, 4, "X");
+        //toggleActivePlayer();
+        break;
+      case 2:
+        if(tempBoard.isAvailable(5)) {
+          main.$set(main.board, 4, "O");
+        } else {
+          main.$set(main.board, randCornerIndex(), "O");
         }
-      } else if (nextMove === 3 && result === -1) {
-        main.$set(main.board, randCornerIndex(), "X");
+        //toggleActivePlayer();
+        break;
+      case 3:
+        var result = cornerContains(tempBoard.board, "O");
+        if(nextMove === 3 && result !== -1) {
+          //console.log("In case 3 true");                                          // ???
+          switch(result) {
+            case 0:
+              main.$set(main.board, 8, "X");
+              break;
+              case 2:
+                main.$set(main.board, 6, "X");
+                break;
+              case 6:
+                main.$set(main.board, 2, "X");
+                break;
+              case 8:
+                main.$set(main.board, 0, "X");
+                //toggleActivePlayer();
+                break;
+          }
+          break;
+        } else if (nextMove === 3 && result === -1) {
+          main.$set(main.board, randCornerIndex(), "X");
+          //toggleActivePlayer();
+          break;
+        }
+      case 4:
+      case 5:
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+        var move = tempBoard.selectBestMove();
+        //console.log("This is the move " + move[0] + " | " + nextMove);                 // ???????
+        main.$set(main.board, move[0], main.tokentwo);
+        if(tempBoard.isWin() || tempBoard.isDraw()) {
+          handleWinOrDraw(tempBoard);
+        } else {
+          //toggleActivePlayer();
+        }
+        break;
       }
-    break;
-    case 4:
-    case 5:
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-      var move = tempBoard.selectBestMove();         // write function
-      console.log(move);
-      main.$set(main.board, move[0], main.tokentwo);
-      if(tempBoard.isWin() || tempBoard.isDraw()) {
-        handleWinOrDraw(tempBoard);
-      } else {
-        toggleActivePlayer();
-      }
-      break;
-    }
-  //toggleActivePlayer();
+    //toggleActivePlayer();
+  }
+  toggleActivePlayer();
 }
 
 
@@ -192,7 +210,7 @@ function randCornerIndex() {
 
 // helper function to determine if the corner of the board is occupied
 function cornerContains(brd, token) {
-  console.log(brd + " | " + token);
+  //console.log(brd + " | " + token);                                                 // ??????
   var corner = [0, 2, 6, 8];
   for(var i = 0; i < corner.length; i++) {
     if(token === brd[corner[i]]) {
@@ -223,10 +241,7 @@ function handleWinOrDraw(brd) {
     currentPlayer = main.playertwo;
   }
 
-  // remove the status bar
-  main.oneIsActive = false;
-  main.twoIsActive = false;
-  main.playAgainEnabled = true;
+
 
   // check for win or draw
   if(brd.isWin()) {
@@ -244,6 +259,11 @@ function handleWinOrDraw(brd) {
   } else if(brd.isDraw()) {
     alert("A Draw");
   }
+
+  // remove the status bar
+  main.oneIsActive = true;
+  main.twoIsActive = true;
+  main.playAgainEnabled = true;
 }
 
 // function to toggle active player status
