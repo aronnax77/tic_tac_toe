@@ -230,7 +230,7 @@ Board.prototype.selectBestMove = function() {
   // no fork return first top ranked move then check for possibility of play at
   // a corner
   for(var k = 0; k < selection.length; k++) {
-    if(this.isCorner(index)) {
+    if(this.isCorner(selection[k][0])) {
       return selection[i];
     }
   }
@@ -394,6 +394,6 @@ TicTacToe.getFirstLargestSelection = getFirstLargestSelection;
 module.exports = TicTacToe;
 
 
-var brd = new Board(["", "O", "X", "", "X", "", "O", "", ""]);
-var result = brd.isFork(5);
+var brd = new Board(["O", "", "", "", "X", "", "O", "", ""]);
+var result = brd.selectTopRankedMovesFor();
 console.log(result);
