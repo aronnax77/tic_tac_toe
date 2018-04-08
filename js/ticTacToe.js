@@ -28,12 +28,12 @@ var main = new Vue({
     singlePlayer: true,     //true,
     playerone: "Player 1",
     playertwo: "Computer",   //"",
-    tokenone: "O",           //"",
-    tokentwo: "X",           //"",
+    tokenone: "X",           //"",
+    tokentwo: "O",           //"",
     scoreone: 0,
     scoretwo: 0,
-    oneIsActive: false,
-    twoIsActive: true,       //false,
+    oneIsActive: true,
+    twoIsActive: false,       //false,
     showPlayers: true,       //false,
     board: ["", "", "", "", "", "", "", "", ""],
     win: [false, false, false, false, false, false, false, false, false],
@@ -104,13 +104,15 @@ var main = new Vue({
         if(this.oneIsActive === true) {
           var token = this.tokenone;
           this.$set(this.board, i, token);
+          var temp = new Board(brd = this.board);
+          if(temp.isWin() || temp.isDraw()) {
+            handleWinOrDraw(temp);
+            toggleActivePlayer();
+            return;
+          }
           toggleActivePlayer();
           playComputer();
-          //toggleActivePlayer();
-        } /*else if(this.twoIsActive === true) {
-          playComputer();
-          toggleActivePlayer();
-        }*/
+        }
       } else if(!this.singlePlayer) {        // two individual players
         // check that square is available
         var tempBoard = new Board(brd=this.board);
@@ -185,8 +187,10 @@ function playComputer() {
       case 8:
       case 9:
         var move = tempBoard.selectBestMove();
-        //console.log("This is the move " + move[0] + " | " + nextMove);                 // ???????
-        main.$set(main.board, move[0], main.tokentwo);
+        console.log("move = " + move);
+        console.log(tempBoard.board);
+        //console.log("This is the move " + move + " | " + nextMove);                 // ???????
+        main.$set(main.board, move, main.tokentwo);
         if(tempBoard.isWin() || tempBoard.isDraw()) {
           handleWinOrDraw(tempBoard);
         } else {
@@ -233,6 +237,10 @@ function checkBoardState() {
 
 // function to handle a win or draw
 function handleWinOrDraw(brd) {
+  console.log("in handleWinOrDraw");
+  console.log(brd);
+  console.log("board = " + brd.board);
+  console.log("isWin = " + brd.isWin());
   // identify current player
   var currentPlayer;
   if(main.oneIsActive === true) {
@@ -240,8 +248,6 @@ function handleWinOrDraw(brd) {
   } else {
     currentPlayer = main.playertwo;
   }
-
-
 
   // check for win or draw
   if(brd.isWin()) {
@@ -255,7 +261,7 @@ function handleWinOrDraw(brd) {
     } else {
       main.scoretwo += 1;
     }
-    alert("Congratulations " + currentPlayer + " you win|");
+    alert("Congratulations " + currentPlayer + " you win!");
   } else if(brd.isDraw()) {
     alert("A Draw");
   }
@@ -278,4 +284,4 @@ function sleep(seconds){
     while(new Date().getTime() < waitUntil) true;
 }
 
-playComputer();
+//playComputer();
