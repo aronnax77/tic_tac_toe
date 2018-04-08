@@ -198,7 +198,7 @@ describe("Unit tests for tictactoe", function() {
     });
   });
 
-  describe.only("Tests for rankMove", function() {
+  describe("Tests for rankMove", function() {
     it('should return 10', function() {
       var brd = new TicTacToe.Board(["O", "", "X", "X", "", "X", "", "O", "O"]);
       assert.equal(10, brd.rankMove(5));
@@ -266,7 +266,7 @@ describe("Unit tests for tictactoe", function() {
   describe("Test for getFirstLargestSelection", function() {
     it('should return true', function() {
       var selection = [ [ 0, 8 ], [ 3, 8 ], [ 5, 8 ], [ 7, -8 ], [ 8, 8 ] ];
-      assert.equal(true, );
+      //assert.equal(true, arraysEqual([0, 8], ));
     });
   });
 
@@ -320,6 +320,72 @@ describe("Unit tests for tictactoe", function() {
     it('should return false', function() {
       var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
       assert.equal(false, brd.isCorner(7));
+    });
+  });
+
+  describe("Tests for isEdge", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isEdge(1));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isEdge(3));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isEdge(5));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(true, brd.isEdge(7));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isEdge(0));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isEdge(2));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isEdge(4));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isEdge(6));
+    });
+    it('should return false', function() {
+      var brd = new TicTacToe.Board(["", "O", "X", "", "X", "", "O", "", ""]);
+      assert.equal(false, brd.isEdge(8));
+    });
+  });
+
+  describe("Tests for getCrossRow", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "", "", "O", "", "", "", "X"]);
+      assert.equal(true, TicTacToe.arraysEqual(["", "O", ""], brd.getCrossRow(1)));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "", "", "O", "", "", "", "X"]);
+      assert.equal(true, TicTacToe.arraysEqual(["", "O", ""], brd.getCrossRow(3)));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "", "", "O", "", "", "", "X"]);
+      assert.equal(true, TicTacToe.arraysEqual(["", "O", ""], brd.getCrossRow(5)));
+    });
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "", "", "O", "", "", "", "X"]);
+      assert.equal(true, TicTacToe.arraysEqual(["", "O", ""], brd.getCrossRow(7)));
+    });
+  });
+
+  describe.only("Tests for selectBestMove", function() {
+    it('should return true', function() {
+      var brd = new TicTacToe.Board(["X", "", "O", "", "O", "", "X", "", "X"]);
+      var result = brd.selectBestMove();
+      assert.equal(1, brd.selectBestMove());
     });
   });
 

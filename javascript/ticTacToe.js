@@ -54,6 +54,22 @@ Board.prototype.getRowsForIndex = function(index) {
 };
 
 
+// method to return the cross row which applies when an edge is played
+Board.prototype.getCrossRow = function(index) {
+  this.getRows();
+  switch(index) {
+    case 1:
+      return this.col2;
+    case 3:
+      return this.row2;
+    case 5:
+      return this.row2;
+    case 7:
+      return this.col2;
+  }
+};
+
+
 // method checks if the current board position is a win. Returns true or false
 Board.prototype.isWin = function() {
   this.getRows();
@@ -216,7 +232,7 @@ Board.prototype.analyseMovesFor = function() {
 
 
 // method to select the best move based on analyseMovesFor()
-// returns the best move in the form [index, rank]
+// returns the best move in the form index
 Board.prototype.selectBestMove = function() {
   var token = this.getNextTokenToPlay();
   var selection = this.selectTopRankedMovesFor();
@@ -224,19 +240,41 @@ Board.prototype.selectBestMove = function() {
   for(var i = 0; i < selection.length; i++) {
     if(this.isFork(selection[i][0])) {
       // play at this position
-      return selection[i];
+      return selection[i][0];
+    }
+  }
+  // can the opponent form a fork?
+  for(var l = 0; l < selection.length; l++) {
+    if(this.isOpponentFork(selection[l][0])) {
+      if(this.isCorner(selection[l][0])) {
+        // look for an edge play which will force a defense
+        for(var m = 0; m < selection.length; m++) {
+          if(this.isEdge(selection[m][0])) {
+            var crossRow = this.getCrossRow(selction[m][0]);
+            // does this row contain an opponent token
+            if(token === "X") {
+              opponentToken = "O";
+            } else {
+              opponentToken = "X";
+            }
+            if(crossRow.indexOf(opponentToken) === -1) {
+              return selection[m][0];
+            }
+          }
+        }
+      }
     }
   }
   // no fork return first top ranked move then check for possibility of play at
   // a corner
   for(var k = 0; k < selection.length; k++) {
     if(this.isCorner(selection[k][0])) {
-      return selection[k];
+      return selection[k][0];
     }
   }
   // if neither a fork or a corner is available to play then return the first
   // top ranked move
-  return selection[0];
+  return selection[0][0];
 };
 
 
@@ -299,12 +337,56 @@ Board.prototype.isFork = function(index) {
 };
 
 
+// method to return the prospect of the opponent playing a fork.
+Board.prototype.isOpponentFork = function(index) {
+  var token = this.getNextTokenToPlay();
+  if(token === "X") {
+    token = "O";
+  } else {
+    token = "X";
+  }
+  var rows = this.getRowsForIndex(index);
+  var prospect = 0;       // a prospect contains one token and two spaces
+  for(var i = 0; i < rows.length; i++) {
+
+    if(rows[i].indexOf(token) !== -1) {   // row contains at least one tokenn
+      // count spaces
+      var spaces = 0;
+      for(var k = 0; k < 3; k++) {
+        if(rows[i][k] === "") {
+          spaces += 1;
+        }
+      }
+      if(spaces > 1) {
+        prospect += 1;
+      }
+    }
+  }
+  if(prospect >= 2) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 
 // method that determines if a selected play produces a corner move.  Returns
 // true or false
 Board.prototype.isCorner = function(index) {
   var cornerIndexes = [0, 2, 6, 8];
   if(cornerIndexes.indexOf(index) !== -1) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+
+// method that determines if a selected play produces an edge move.  Returns
+// true or false
+Board.prototype.isEdge = function(index) {
+  var edgeIndexes = [1, 3, 5, 7];
+  if(edgeIndexes.indexOf(index) !== -1) {
     return true;
   } else {
     return false;
@@ -396,6 +478,6 @@ TicTacToe.getFirstLargestSelection = getFirstLargestSelection;
 module.exports = TicTacToe;
 
 
-var brd = new Board(["X", "", "", "", "O", "", "", "", "X"]);
-var result = brd.selectBestMove();
+var brd = new Board(["X", "", "O", "", "O", "", "X", "", "X"]);
+var result = brd.selectTopRankedMovesFor();
 console.log(result);
