@@ -38,7 +38,7 @@ body {
   align-items: center;
   width: 28vw;
   height: 30vw;
-  background-color: lightyellow;  /*#e6cc89;*/
+  background-color: lightyellow;
   border-radius: 1vw;
   margin: 2.5vw auto;
   box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.4) inset,
@@ -139,7 +139,7 @@ button {
   background-color: orange;
   border-radius: 50%;
   color: #fff;
-  font-size: 1.4em;
+  font-size: 1.2em;
   padding: 0.5em;
   border-radius: 50%;
 }
@@ -209,7 +209,7 @@ button {
 }
 
 
-@media only screen and (max-width:1200px) {
+@media only screen and (max-width:1400px) {
   /* For mobile phones: (x1.5)*/
   .title {
     font-size: 2.25vw;

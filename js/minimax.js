@@ -227,7 +227,6 @@ Board.prototype.rankMove = function(pos) {
 Board.prototype.analyseMovesFor = function() {
   var result = [];          // holds the result
   var tempBoard = this.board.slice(); // copy present board
-  //var newBoard  = tempBoard;
   var choices   = this.available();   // get a list of available indecies
   for(var i = 0; i < choices.length; i++) {
     var tempBoardObj = new Board(tempBoard);

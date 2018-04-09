@@ -112,7 +112,6 @@ var main = new Vue({
       this.component = "screen-four";
       this.showPlayers = true;
       if(this.singlePlayer && this.twoIsActive) {
-        //playComputer();             // xxxx ensure this works
         setTimeout(function() { playComputer(); }, 1000);
       }
     },
@@ -128,7 +127,6 @@ var main = new Vue({
             return;
           }
           toggleActivePlayer();
-          //playComputer();
           setTimeout(function() { playComputer(); }, 1000);
         }
       } else if(!this.singlePlayer) {        // two individual players
@@ -140,6 +138,7 @@ var main = new Vue({
           if(nextMoveNum % 2 === 0) {
             this.$set(this.board, i, "O");
             checkBoardState();
+
           } else {
             this.$set(this.board, i, "X");
             checkBoardState();
@@ -203,8 +202,6 @@ function playComputer() {
       case 8:
       case 9:
         var move = tempBoard.selectBestMove();
-        console.log("move = " + move);
-        console.log(tempBoard.board);
         main.$set(main.board, move, main.tokentwo);
         if(tempBoard.isWin() || tempBoard.isDraw()) {
           handleWinOrDraw(tempBoard);
@@ -242,6 +239,7 @@ function checkBoardState() {
   var tempBoard = new Board(brd=main.board);
   if(tempBoard.isWin() || tempBoard.isDraw()) {
     handleWinOrDraw(tempBoard);
+    toggleActivePlayer();
   } else {
     toggleActivePlayer();
   }
@@ -293,18 +291,12 @@ function handleWinOrDraw(brd) {
   }
 
   // remove the status bar
-  main.oneIsActive = true;
-  main.twoIsActive = true;
+    main.oneIsActive = true;
+    main.twoIsActive = true;
 }
 
 // function to toggle active player status
 function toggleActivePlayer() {
   main.oneIsActive = !main.oneIsActive;
   main.twoIsActive = !main.twoIsActive;
-}
-
-// utility function
-function sleep(seconds){
-    var waitUntil = new Date().getTime() + seconds*1000;
-    while(new Date().getTime() < waitUntil) true;
 }
