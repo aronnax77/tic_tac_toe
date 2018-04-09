@@ -1,3 +1,14 @@
+<!-- Author: Richard Myatt
+     Date: 9 April 2018
+
+     A game of tic tac toe being a challenge set by freecodecamp.  The main web
+     application uses Vue.js and the game logic is a combination of strategy
+     presented in the wikipedia article https://en.wikipedia.org/wiki/Tic-tac-toe
+     and an implementation of the minimax algorithm.
+
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +49,17 @@
       </div>
     </div>
 
+    <customalert v-if="showAlert"
+                  @close="close"
+                  :msg="message">
+      <!--
+        you can use custom content here to overwrite
+        default content
+      -->
+    </customalert>
+
   </div>
+
 
   <template id="screen1">
     <div>
@@ -93,6 +114,25 @@
       <div class="square" :class="{ green: win[6] }" @click="$emit('play', 6)">{{ board[6] }}</div>
       <div class="square" :class="{ green: win[7] }" @click="$emit('play', 7)">{{ board[7] }}</div>
       <div class="square" :class="{ green: win[8] }" @click="$emit('play', 8)">{{ board[8] }}</div>
+    </div>
+  </template>
+
+  <template id="alert-template">
+    <div class="alert-container">
+
+      <div class="alert-header">
+        <h3>Tic Tac Toe</h3>
+      </div>
+
+      <div class="alert-body">
+       <p>{{ msg }}</p>
+      </div>
+
+      <div class="alert-footer">
+          <button class="alert-default-button" @click="$emit('close')">
+            OK
+          </button>
+      </div>
     </div>
   </template>
 

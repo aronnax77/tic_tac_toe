@@ -1,3 +1,14 @@
+/* Author: Richard Myatt
+   Date: 9 April 2018
+
+   A game of tic tac toe being a challenge set by freecodecamp.  The main web
+   application uses Vue.js and the game logic is a combination of strategy
+   presented in the wikipedia article https://en.wikipedia.org/wiki/Tic-tac-toe
+   and an implementation of the minimax algorithm.
+
+*/
+
+
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
 
@@ -149,6 +160,55 @@ button {
   margin-left: 20px;
 }
 
+
+/* custom alert box */
+
+.alert-container {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 20px;
+  width: 320px;
+  height: auto;
+  margin: 0px auto;
+  padding: 10px 20px 5px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+  transition: all .3s ease;
+  border-radius: 20px;
+  background-color: lightyellow;
+  border: 2px solid black;
+}
+
+.alert-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.alert-default-button {
+  font-size: 0.8em;
+  color: #000;
+  background-color: lightblue;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 10px;
+}
+
+#show-alert {
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: orange;
+}
+
+.alert-header {
+  font-size: 20px;
+  font-family: 'Indie Flower', cursive;
+  color: #6b6d85;
+}
+
+
 @media only screen and (max-width:1200px) {
   /* For mobile phones: (x1.5)*/
   .title {
@@ -229,7 +289,7 @@ button {
   }
 
   .square {
-    font-size; 11.2vw;
+    font-size: 11.2vw;
   }
 
   .top-panel {
@@ -254,5 +314,5 @@ button {
     width: 21.8vw;
     font-size: 2.8vw;
   }
-}
+
 }

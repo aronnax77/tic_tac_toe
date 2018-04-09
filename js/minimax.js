@@ -1,3 +1,14 @@
+/* Author: Richard Myatt
+   Date: 9 April 2018
+
+   A game of tic tac toe being a challenge set by freecodecamp.  The main web
+   application uses Vue.js and the game logic is a combination of strategy
+   presented in the wikipedia article https://en.wikipedia.org/wiki/Tic-tac-toe
+   and an implementation of the minimax algorithm.
+
+*/
+
+
 // constructor for the board
 function Board(arr) {
   if(arr === undefined) {

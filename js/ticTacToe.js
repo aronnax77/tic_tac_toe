@@ -1,3 +1,13 @@
+/* Author: Richard Myatt
+   Date: 9 April 2018
+
+   A game of tic tac toe being a challenge set by freecodecamp.  The main web
+   application uses Vue.js and the game logic is a combination of strategy
+   presented in the wikipedia article https://en.wikipedia.org/wiki/Tic-tac-toe
+   and an implementation of the minimax algorithm.
+
+*/
+
 Vue.component("screen-one", {
   template: "#screen1"
 });
@@ -13,6 +23,11 @@ Vue.component("screen-three", {
 Vue.component("screen-four", {
   template: "#screen4",
   props: ["board", "win"]
+});
+
+Vue.component('customalert', {
+  props: ["msg"],
+  template: '#alert-template'
 });
 
 
@@ -33,24 +48,28 @@ var main = new Vue({
     showPlayers: false,
     board: ["", "", "", "", "", "", "", "", ""],
     win: [false, false, false, false, false, false, false, false, false],
-    component: "screen-one"
+    component: "screen-one",
+    message: "",
+    showAlert: false
   },
   methods: {
     reset: function() {
-      this.playAgainEnabled = false;
-      this.resetEnabled = true;
-      this.singlePlayer = true;
-      this.playertwo = "";
-      this.tokenone = "";
-      this.tokentwo = "";
-      this.scoreone = 0;
-      this.scoretwo = 0;
-      this.oneIsActive = false;
-      this.twoIsActive = false;
-      this.showPlayers = false;
-      this.board = ["", "", "", "", "", "", "", "", ""];
-      this.win = [false, false, false, false, false, false, false, false, false];
-      this.component = "screen-one";
+      if(this.resetEnabled === true) {
+        this.playAgainEnabled = false;
+        this.resetEnabled = true;
+        this.singlePlayer = true;
+        this.playertwo = "";
+        this.tokenone = "";
+        this.tokentwo = "";
+        this.scoreone = 0;
+        this.scoretwo = 0;
+        this.oneIsActive = false;
+        this.twoIsActive = false;
+        this.showPlayers = false;
+        this.board = ["", "", "", "", "", "", "", "", ""];
+        this.win = [false, false, false, false, false, false, false, false, false];
+        this.component = "screen-one";
+      }
     },
     again: function() {
       if(this.playAgainEnabled) {
@@ -127,6 +146,12 @@ var main = new Vue({
           }
         }
       }
+    },
+    close: function() {
+      this.message = "";
+      this.showAlert = false;
+      this.playAgainEnabled = true;
+      this.resetEnabled = true;
     }
   }
   });
@@ -249,19 +274,27 @@ function handleWinOrDraw(brd) {
       main.scoretwo += 1;
     }
     if(currentPlayer === "Computer") {
-      alert("Ooops.. " + currentPlayer + " wins!!!");
+      var str = "Ooops.. " + currentPlayer + " wins!!!";
+      main.message = str;
+      main.showAlert = true;
+      main.resetEnabled = false;
     } else {
-      alert("Congratulations " + currentPlayer + " you win!");
+      var str = "Congratulations " + currentPlayer + " you win!";
+      main.message = str;
+      main.showAlert = true;
+      main.resetEnabled = false;
     }
 
   } else if(brd.isDraw()) {
-    alert("A Draw");
+    var str = "A Draw";
+    main.message = str;
+    main.showAlert = true;
+    main.resetEnabled = false;
   }
 
   // remove the status bar
   main.oneIsActive = true;
   main.twoIsActive = true;
-  main.playAgainEnabled = true;
 }
 
 // function to toggle active player status
@@ -275,5 +308,3 @@ function sleep(seconds){
     var waitUntil = new Date().getTime() + seconds*1000;
     while(new Date().getTime() < waitUntil) true;
 }
-
-//playComputer();
