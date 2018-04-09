@@ -10,10 +10,6 @@ Vue.component("screen-three", {
   template: "#screen3"
 });
 
-/*Vue.component("screen-four", {
-  template: "#screen4"
-});*/
-
 Vue.component("screen-four", {
   template: "#screen4",
   props: ["board", "win"]
@@ -25,19 +21,19 @@ var main = new Vue({
   data: {
     playAgainEnabled: false,
     resetEnabled: true,
-    singlePlayer: true,     //true,
+    singlePlayer: true,
     playerone: "Player 1",
-    playertwo: "Computer",   //"",
-    tokenone: "X",           //"",
-    tokentwo: "O",           //"",
+    playertwo: "",
+    tokenone: "",
+    tokentwo: "",
     scoreone: 0,
     scoretwo: 0,
-    oneIsActive: true,
-    twoIsActive: false,       //false,
-    showPlayers: true,       //false,
+    oneIsActive: false,
+    twoIsActive: false,
+    showPlayers: false,
     board: ["", "", "", "", "", "", "", "", ""],
     win: [false, false, false, false, false, false, false, false, false],
-    component: "screen-four",     //"screen-one"
+    component: "screen-one"
   },
   methods: {
     reset: function() {
@@ -65,11 +61,12 @@ var main = new Vue({
 
         if(this.tokenone === "X") {
           this.oneIsActive = true;
+          this.playAgainEnabled = false;
         } else {
           this.twoIsActive = true;
+          this.playAgainEnabled = false;
+          setTimeout(function() { playComputer(); }, 1000);
         }
-
-        this.playAgainEnabled = false;
       }
     },
     setPlayer: function(arg) {
@@ -95,8 +92,9 @@ var main = new Vue({
       }
       this.component = "screen-four";
       this.showPlayers = true;
-      if(this.singlePlayer) {
-        playComputer();             // xxxx ensure this works
+      if(this.singlePlayer && this.twoIsActive) {
+        //playComputer();             // xxxx ensure this works
+        setTimeout(function() { playComputer(); }, 1000);
       }
     },
     playNext: function(i) {
@@ -111,7 +109,8 @@ var main = new Vue({
             return;
           }
           toggleActivePlayer();
-          playComputer();
+          //playComputer();
+          setTimeout(function() { playComputer(); }, 1000);
         }
       } else if(!this.singlePlayer) {        // two individual players
         // check that square is available
@@ -135,17 +134,13 @@ var main = new Vue({
 
 // function to handle computers moves
 function playComputer() {
-  //console.log("two is active " + main.twoIsActive);                               // ?????
   if(main.twoIsActive === true) {
     var tempBoard = new Board(brd=main.board);
     var nextMove  = tempBoard.getNextMoveNum();
-    //console.log("tempBoard = " + tempBoard.board);
-    //console.log("nextMove = " + nextMove);
 
     switch(nextMove) {
       case 1:
         main.$set(main.board, 4, "X");
-        //toggleActivePlayer();
         break;
       case 2:
         if(tempBoard.isAvailable(5)) {
@@ -153,12 +148,10 @@ function playComputer() {
         } else {
           main.$set(main.board, randCornerIndex(), "O");
         }
-        //toggleActivePlayer();
         break;
       case 3:
         var result = cornerContains(tempBoard.board, "O");
         if(nextMove === 3 && result !== -1) {
-          //console.log("In case 3 true");                                          // ???
           switch(result) {
             case 0:
               main.$set(main.board, 8, "X");
@@ -171,13 +164,11 @@ function playComputer() {
                 break;
               case 8:
                 main.$set(main.board, 0, "X");
-                //toggleActivePlayer();
                 break;
           }
           break;
         } else if (nextMove === 3 && result === -1) {
           main.$set(main.board, randCornerIndex(), "X");
-          //toggleActivePlayer();
           break;
         }
       case 4:
@@ -189,16 +180,13 @@ function playComputer() {
         var move = tempBoard.selectBestMove();
         console.log("move = " + move);
         console.log(tempBoard.board);
-        //console.log("This is the move " + move + " | " + nextMove);                 // ???????
         main.$set(main.board, move, main.tokentwo);
         if(tempBoard.isWin() || tempBoard.isDraw()) {
           handleWinOrDraw(tempBoard);
         } else {
-          //toggleActivePlayer();
         }
         break;
       }
-    //toggleActivePlayer();
   }
   toggleActivePlayer();
 }
@@ -214,7 +202,6 @@ function randCornerIndex() {
 
 // helper function to determine if the corner of the board is occupied
 function cornerContains(brd, token) {
-  //console.log(brd + " | " + token);                                                 // ??????
   var corner = [0, 2, 6, 8];
   for(var i = 0; i < corner.length; i++) {
     if(token === brd[corner[i]]) {
@@ -261,7 +248,12 @@ function handleWinOrDraw(brd) {
     } else {
       main.scoretwo += 1;
     }
-    alert("Congratulations " + currentPlayer + " you win!");
+    if(currentPlayer === "Computer") {
+      alert("Ooops.. " + currentPlayer + " wins!!!");
+    } else {
+      alert("Congratulations " + currentPlayer + " you win!");
+    }
+
   } else if(brd.isDraw()) {
     alert("A Draw");
   }

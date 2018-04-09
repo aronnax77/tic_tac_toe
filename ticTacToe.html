@@ -81,24 +81,9 @@
     </div>
   </template>
 
-  <!--<template id="screen4">
-    <div>
-      <div class="wording">
-        <h2>Player 1 would you like X or O?</h2>
-        <p>(X plays first)</p>
-      </div>
-
-      <div class="btns">
-        <button class="token-x">X</button>
-        <button class="token-o">O</button>
-      </div>
-    </div>
-  </template>-->
 
   <template id="screen4">
     <div class="board">
-      <!--<div class="square" v-for="(sq, index) in board"
-                          @click="playNext(index)">{{ sq }}</div>-->
       <div class="square" :class="{ green: win[0] }" @click="$emit('play', 0)">{{ board[0] }}</div>
       <div class="square" :class="{ green: win[1] }" @click="$emit('play', 1)">{{ board[1] }}</div>
       <div class="square" :class="{ green: win[2] }" @click="$emit('play', 2)">{{ board[2] }}</div>
