@@ -34,6 +34,7 @@ Vue.component('customalert', {
 var main = new Vue({
   el: "#app",
   data: {
+    autoPlayAgain: true,
     playAgainEnabled: false,
     resetEnabled: true,
     singlePlayer: true,
@@ -81,10 +82,13 @@ var main = new Vue({
         if(this.tokenone === "X") {
           this.oneIsActive = true;
           this.playAgainEnabled = false;
-        } else {
+        } else if(this.tokenone === "O" && this.playertwo === "Computer") {
           this.twoIsActive = true;
           this.playAgainEnabled = false;
           setTimeout(function() { playComputer(); }, 1000);
+        } else {
+          this.twoIsActive = true;
+          this.playAgainEnabled = false;
         }
       }
     },
@@ -116,7 +120,8 @@ var main = new Vue({
       }
     },
     playNext: function(i) {
-      if(this.singlePlayer) {
+      var tempBoard = new Board(brd=this.board);
+      if(this.singlePlayer && tempBoard.isAvailable(i + 1) && this.playAgainEnabled === false) {
         if(this.oneIsActive === true) {
           var token = this.tokenone;
           this.$set(this.board, i, token);
@@ -131,7 +136,7 @@ var main = new Vue({
         }
       } else if(!this.singlePlayer) {        // two individual players
         // check that square is available
-        var tempBoard = new Board(brd=this.board);
+        //var tempBoard = new Board(brd=this.board);
         if(tempBoard.isAvailable(i + 1) && this.playAgainEnabled === false) {
           // get next move number
           var nextMoveNum = tempBoard.getNextMoveNum();
@@ -151,6 +156,7 @@ var main = new Vue({
       this.showAlert = false;
       this.playAgainEnabled = true;
       this.resetEnabled = true;
+      this.again();
     }
   }
   });
