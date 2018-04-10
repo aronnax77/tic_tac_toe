@@ -44,7 +44,7 @@
 
       </div>
       <div class="bottom-panel">
-        <button class="again" @click="again" v-show="false">Play again</button>
+        <button class="again" @click="again" v-show="!autoPlayAgain">Play again</button>
         <button class="reset" @click="reset">Reset</button>
       </div>
     </div>

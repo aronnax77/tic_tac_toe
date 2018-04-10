@@ -156,7 +156,9 @@ var main = new Vue({
       this.showAlert = false;
       this.playAgainEnabled = true;
       this.resetEnabled = true;
-      this.again();
+      if(this.autoPlayAgain) {
+        this.again();
+      }
     }
   }
   });
@@ -253,10 +255,6 @@ function checkBoardState() {
 
 // function to handle a win or draw
 function handleWinOrDraw(brd) {
-  console.log("in handleWinOrDraw");
-  console.log(brd);
-  console.log("board = " + brd.board);
-  console.log("isWin = " + brd.isWin());
   // identify current player
   var currentPlayer;
   if(main.oneIsActive === true) {
