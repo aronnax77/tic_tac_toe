@@ -278,25 +278,30 @@ function handleWinOrDraw(brd) {
     if(currentPlayer === "Computer") {
       var str = "Ooops.. " + currentPlayer + " wins!!!";
       main.message = str;
-      main.showAlert = true;
-      main.resetEnabled = false;
+      callCustomAlert();
     } else {
       var str = "Congratulations " + currentPlayer + " you win!";
       main.message = str;
-      main.showAlert = true;
-      main.resetEnabled = false;
+      callCustomAlert();
     }
 
   } else if(brd.isDraw()) {
     var str = "A Draw";
     main.message = str;
-    main.showAlert = true;
-    main.resetEnabled = false;
+    callCustomAlert();
   }
 
   // remove the status bar
     main.oneIsActive = true;
     main.twoIsActive = true;
+}
+
+// function to introduce a delay into the calling of the final custom alert
+function callCustomAlert() {
+  setTimeout(function() {
+    main.showAlert = true;
+    main.resetEnabled = false;
+  }, 1300);
 }
 
 // function to toggle active player status
